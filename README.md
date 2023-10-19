@@ -1,0 +1,3 @@
+# 杖魔法リアル戦闘化スクリプト
+pluginフォルダへは"スクリプトはこちら"の中にあるWandRealBattleをそのまま突っ込んでください。  
+細かい説明はWandRealBattleの中にあるreadme.jsに色々書いてあります。
