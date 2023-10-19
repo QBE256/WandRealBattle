@@ -55,7 +55,6 @@ UnitCommand.Wand._moveSelection = function () {
         this._wand = ItemControl.getEquippedWand(this.getCommandTarget());
         this._preWand = createObject(PreWand);
         this._preWand.enterPreAttackCycle(attackParam);
-        this._useItem();
         this.changeCycleMode(WandCommandMode.REAL);
       } else {
         this._useItem();
@@ -74,10 +73,13 @@ UnitCommand.Wand._backgroundAction = function () {
   var itemType = this._wand.getItemType();
   var disabledItemTypes = [ItemType.RECOVERY, ItemType.DAMAGE, ItemType.STATE];
   if (!disabledItemTypes.includes(itemType)) {
-    this._itemUse.setItemSkipMode(true);
-    this._itemUse.disableItemDecrement();
-    this._itemUse.moveUseCycle();
-    this._itemUse.setItemSkipMode(false);
+    var item = this._itemSelectMenu.getSelectWand();
+    this._itemUse = ItemPackageControl.getItemUseParent(item);
+    var itemTargetInfo = this._itemSelection.getResultItemTargetInfo();
+    itemTargetInfo.unit = this.getCommandTarget();
+    itemTargetInfo.item = item;
+    itemTargetInfo.isPlayerSideCall = true;
+    this._itemUse.useBackground(itemTargetInfo);
   }
 };
 

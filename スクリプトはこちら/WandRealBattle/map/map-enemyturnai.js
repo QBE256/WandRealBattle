@@ -55,7 +55,7 @@ ItemAutoAction._enterWandRealBattle = function () {
 ItemAutoAction._moveCurosrShow = function () {
   if (this._autoActionCursor.moveAutoActionCursor() !== MoveResult.CONTINUE) {
     if (this._battleType === BattleType.REAL) {
-      if (this._enterItemUse() === EnterResult.NOTENTER || this._enterWandRealBattle() === EnterResult.NOTENTER) {
+      if (this._enterWandRealBattle() === EnterResult.NOTENTER) {
         return MoveResult.END;
       }
       this.changeCycleMode(ItemAutoActionMode.REAL_BATTLE);
@@ -92,10 +92,8 @@ ItemAutoAction._backgroundAction = function () {
   var itemType = this._item.getItemType();
   var disabledItemTypes = [ItemType.RECOVERY, ItemType.DAMAGE, ItemType.STATE];
   if (!disabledItemTypes.includes(itemType)) {
-    this._itemUse.setItemSkipMode(true);
-    this._itemUse.disableItemDecrement();
-    this._itemUse.moveUseCycle();
-    this._itemUse.setItemSkipMode(false);
+    var targetInfo = this._createItemTargetInfo();
+    this._itemUse.useBackground(targetInfo);
   }
 };
 
